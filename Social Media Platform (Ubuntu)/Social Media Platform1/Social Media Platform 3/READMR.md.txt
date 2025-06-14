@@ -1,0 +1,27 @@
+# Social Media Platform (CLI-Based)
+
+This project is a **command-line based social media platform simulation** written in C. It features different access levels for Admins, Moderators, and Regular Users. Each role has its own set of permissions and capabilities within the system.
+
+---
+
+## Features
+
+### 👤 User Roles
+
+- **Admin**: Can manage users, directories, permissions, and system monitoring.
+- **Moderator**: Can view and manage flagged content, generate reports, and monitor user-generated content.
+- **Regular User**: Can create posts, add comments, view posts, and backup files.
+
+---
+
+## Directory Structure
+
+```plaintext
+/socialmedia
+│
+├── admin                 # Admin-specific data (activity logs, etc.)
+├── moderators
+│   ├── flagged           # Storage for flagged content
+│   └── reports           # Moderator-generated reports
+└── users
+    └── <username>        # Each user has a dedicated directory
