@@ -1,3 +1,0 @@
-LALA,LALA
-4,math
-77,multimedia
