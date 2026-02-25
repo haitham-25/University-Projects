@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Dashboard - AutoDrive</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Archivo:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .dashboard-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .dashboard-header {
+            background: var(--secondary);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 2px solid rgba(255, 61, 0, 0.3);
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .user-info h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: white;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .user-email {
+            color: rgba(224, 224, 224, 0.7);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: var(--secondary);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 2px solid rgba(255, 61, 0, 0.2);
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .stat-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            color: var(--primary);
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: rgba(224, 224, 224, 0.7);
+            font-size: 0.95rem;
+        }
+
+        .dashboard-section {
+            background: var(--secondary);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 2px solid rgba(255, 61, 0, 0.2);
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            color: white;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: rgba(224, 224, 224, 0.5);
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .activity-item {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 61, 0, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-info {
+            flex: 1;
+        }
+
+        .activity-title {
+            color: white;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .activity-date {
+            color: rgba(224, 224, 224, 0.5);
+            font-size: 0.9rem;
+        }
+
+        .activity-action {
+            margin-left: 1rem;
+        }
+
+        .mini-car-card {
+            display: flex;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 61, 0, 0.2);
+            align-items: center;
+        }
+
+        .mini-car-card:last-child {
+            border-bottom: none;
+        }
+
+        .mini-car-icon {
+            font-size: 3rem;
+            min-width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #1A1A1A 0%, #2A2A2A 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mini-car-info {
+            flex: 1;
+        }
+
+        .mini-car-name {
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .mini-car-price {
+            color: var(--primary);
+            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .mini-car-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .mini-car-card {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .mini-car-actions {
+                width: 100%;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">AUTODRIVE</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="browse.html">Browse Cars</a></li>
+                <li><a href="dealerships.html">Dealerships</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="auth-buttons"></div>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+        </nav>
+    </header>
+
+    <div class="page-container">
+        <div class="page-header">
+            <div class="page-header-content">
+                <h1>My Dashboard</h1>
+                <p>Manage your car shopping journey</p>
+            </div>
+        </div>
+
+        <div class="dashboard-container">
+            <div class="dashboard-header">
+                <div class="user-info">
+                    <h2 id="userName">Welcome Back!</h2>
+                    <p class="user-email" id="userEmail">user@email.com</p>
+                </div>
+                <a href="browse.html" class="btn btn-primary">Browse More Cars</a>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="savedCarsCount">0</div>
+                    <div class="stat-label">Saved Cars</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="testDrivesCount">0</div>
+                    <div class="stat-label">Test Drives Booked</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="comparisonsCount">0</div>
+                    <div class="stat-label">Comparisons Made</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="daysActive">0</div>
+                    <div class="stat-label">Days Active</div>
+                </div>
+            </div>
+
+            <div class="dashboard-section">
+                <h3 class="section-title">
+                    <span>❤️</span>
+                    <span>Saved Cars</span>
+                </h3>
+                <div id="savedCarsList">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">🚗</div>
+                        <p>No saved cars yet</p>
+                        <a href="browse.html" class="btn btn-primary" style="margin-top: 1rem;">Browse Cars</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-section">
+                <h3 class="section-title">
+                    <span>📅</span>
+                    <span>Upcoming Test Drives</span>
+                </h3>
+                <div id="testDrivesList">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📅</div>
+                        <p>No test drives scheduled</p>
+                        <a href="browse.html" class="btn btn-primary" style="margin-top: 1rem;">Book a Test Drive</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-section">
+                <h3 class="section-title">
+                    <span>📊</span>
+                    <span>Recent Activity</span>
+                </h3>
+                <div id="recentActivity">
+                    <div class="empty-state">
+                        <div class="empty-state-icon">📋</div>
+                        <p>No recent activity</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>AutoDrive</h3>
+                <p>Your trusted partner in finding the perfect vehicle.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="browse.html">Browse Cars</a></li>
+                    <li><a href="dealerships.html">Dealerships</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Resources</h3>
+                <ul class="footer-links">
+                    <li><a href="calculator.html">Loan Calculator</a></li>
+                    <li><a href="insurance.html">Insurance</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>📧 info@autodrive.com</p>
+                <p>📱 1-800-AUTO-DRIVE</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 AutoDrive. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+    <script src="cars.js"></script>
+    <script>
+        // Check if user is logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!Auth.isLoggedIn()) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            loadDashboard();
+        });
+
+        function loadDashboard() {
+            const user = Auth.getUser();
+            
+            // Update user info
+            document.getElementById('userName').textContent = `Welcome back, ${user.name}!`;
+            document.getElementById('userEmail').textContent = user.email;
+
+            // Load saved cars
+            const savedCars = SavedCars.getSaved();
+            document.getElementById('savedCarsCount').textContent = savedCars.length;
+            
+            if (savedCars.length > 0) {
+                const savedCarsList = document.getElementById('savedCarsList');
+                savedCarsList.innerHTML = savedCars.map(car => `
+                    <div class="mini-car-card">
+                        <div class="mini-car-icon">${car.icon}</div>
+                        <div class="mini-car-info">
+                            <div class="mini-car-name">${car.name}</div>
+                            <div class="mini-car-price">${formatCurrency(car.price)}</div>
+                        </div>
+                        <div class="mini-car-actions">
+                            <a href="browse.html" class="btn btn-primary btn-small">View</a>
+                            <button class="btn btn-outline btn-small" onclick="removeSavedCar(${car.id})">Remove</button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // Load test drives
+            const testDrives = TestDrives.getBookings();
+            document.getElementById('testDrivesCount').textContent = testDrives.length;
+            
+            if (testDrives.length > 0) {
+                const testDrivesList = document.getElementById('testDrivesList');
+                testDrivesList.innerHTML = testDrives.map(booking => `
+                    <div class="activity-item">
+                        <div class="activity-info">
+                            <div class="activity-title">${booking.vehicle}</div>
+                            <div class="activity-date">${formatDate(booking.date)}</div>
+                        </div>
+                        <button class="btn btn-outline btn-small" onclick="cancelBooking(${booking.id})">Cancel</button>
+                    </div>
+                `).join('');
+            }
+
+            // Load comparisons
+            const comparisons = Comparison.getCompared();
+            document.getElementById('comparisonsCount').textContent = comparisons.length;
+
+            // Calculate days active
+            if (user.registrationDate || user.loginDate) {
+                const startDate = new Date(user.registrationDate || user.loginDate);
+                const today = new Date();
+                const daysActive = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
+                document.getElementById('daysActive').textContent = daysActive;
+            }
+
+            // Show recent activity
+            if (savedCars.length > 0 || testDrives.length > 0) {
+                const activityDiv = document.getElementById('recentActivity');
+                let activities = [];
+                
+                savedCars.forEach(car => {
+                    activities.push({
+                        text: `Saved ${car.name} to favorites`,
+                        date: new Date()
+                    });
+                });
+                
+                testDrives.forEach(booking => {
+                    activities.push({
+                        text: `Booked test drive for ${booking.vehicle}`,
+                        date: new Date(booking.date)
+                    });
+                });
+
+                activities.sort((a, b) => b.date - a.date);
+                activities = activities.slice(0, 5);
+
+                activityDiv.innerHTML = activities.map(activity => `
+                    <div class="activity-item">
+                        <div class="activity-info">
+                            <div class="activity-title">${activity.text}</div>
+                            <div class="activity-date">${formatDate(activity.date)}</div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function removeSavedCar(carId) {
+            if (confirm('Remove this car from your favorites?')) {
+                SavedCars.remove(carId);
+                loadDashboard();
+            }
+        }
+
+        function cancelBooking(bookingId) {
+            if (confirm('Cancel this test drive booking?')) {
+                TestDrives.cancel(bookingId);
+                loadDashboard();
+            }
+        }
+    </script>
+</body>
+</html>

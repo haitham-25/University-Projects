@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoDrive - Premium Car Listings & Test Drives</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Archivo:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Hero Section */
+        .hero {
+            height: 90vh;
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.9), rgba(255, 61, 0, 0.2)),
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect fill="%231A1A1A"/><path d="M0,400 Q300,200 600,400 T1200,400 L1200,800 L0,800 Z" fill="%230A0A0A"/></svg>');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 61, 0, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            padding: 2rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #FFFFFF 0%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 2.5rem;
+            color: var(--text);
+            font-weight: 300;
+        }
+
+        .search-bar {
+            background: rgba(26, 26, 26, 0.9);
+            padding: 2rem;
+            border-radius: 15px;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 61, 0, 0.3);
+            box-shadow: var(--shadow);
+        }
+
+        .search-input {
+            padding: 1rem 1.5rem;
+            border: 2px solid rgba(255, 61, 0, 0.3);
+            background: rgba(10, 10, 10, 0.8);
+            color: var(--text);
+            border-radius: 8px;
+            font-size: 1rem;
+            min-width: 200px;
+            transition: all 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(255, 61, 0, 0.4);
+        }
+
+        /* Features Grid */
+        .features {
+            background: linear-gradient(135deg, var(--secondary) 0%, rgba(255, 61, 0, 0.05) 100%);
+            padding: 6rem 2rem;
+            position: relative;
+        }
+
+        .features::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--gradient);
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 2rem;
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 10px 30px rgba(255, 61, 0, 0.5));
+        }
+
+        .feature-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .stats-section {
+            background: var(--dark);
+            padding: 4rem 2rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(255, 61, 0, 0.1);
+            border-radius: 10px;
+            border: 2px solid rgba(255, 61, 0, 0.3);
+        }
+
+        .stat-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            font-weight: 900;
+        }
+
+        .stat-label {
+            color: rgba(224, 224, 224, 0.7);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            .search-bar {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="index.html" class="logo">AUTODRIVE</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="browse.html">Browse Cars</a></li>
+                <li><a href="dealerships.html">Dealerships</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <a href="login.html" class="btn btn-outline">Login</a>
+                <a href="register.html" class="btn btn-primary">Sign Up</a>
+            </div>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Find Your Dream Car</h1>
+            <p>Browse thousands of vehicles, book test drives, and drive away in your perfect ride</p>
+            <div class="search-bar">
+                <input type="text" class="search-input" placeholder="Make or Model" id="makeModel">
+                <select class="search-input" id="priceRange">
+                    <option value="">Price Range</option>
+                    <option value="0-20000">$0 - $20,000</option>
+                    <option value="20000-40000">$20,000 - $40,000</option>
+                    <option value="40000-60000">$40,000 - $60,000</option>
+                    <option value="60000+">$60,000+</option>
+                </select>
+                <select class="search-input" id="bodyType">
+                    <option value="">Body Type</option>
+                    <option value="sedan">Sedan</option>
+                    <option value="suv">SUV</option>
+                    <option value="truck">Truck</option>
+                    <option value="coupe">Coupe</option>
+                </select>
+                <a href="browse.html" class="btn btn-primary">Search Cars</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="stats-grid">
+            <div class="stat-card fade-in">
+                <div class="stat-value">10,000+</div>
+                <div class="stat-label">Cars Available</div>
+            </div>
+            <div class="stat-card fade-in">
+                <div class="stat-value">500+</div>
+                <div class="stat-label">Dealerships</div>
+            </div>
+            <div class="stat-card fade-in">
+                <div class="stat-value">50,000+</div>
+                <div class="stat-label">Happy Customers</div>
+            </div>
+            <div class="stat-card fade-in">
+                <div class="stat-value">4.9★</div>
+                <div class="stat-label">Average Rating</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="section-header">
+            <h2>Why Choose AutoDrive</h2>
+            <p>Everything you need in one powerful platform</p>
+        </div>
+        <div class="grid-4" style="max-width: 1400px; margin: 0 auto;">
+            <div class="feature-card">
+                <div class="feature-icon">🔍</div>
+                <h3>Advanced Search</h3>
+                <p>Filter by make, model, price, features, and more to find exactly what you want</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📅</div>
+                <h3>Easy Test Drives</h3>
+                <p>Book test drives online with your preferred dealership in seconds</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💰</div>
+                <h3>Loan Calculator</h3>
+                <p>Calculate monthly payments and compare financing options instantly</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⭐</div>
+                <h3>Reviews & Ratings</h3>
+                <p>Read honest reviews from real buyers and rate your experience</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Compare Vehicles</h3>
+                <p>Side-by-side comparison of specs, features, and pricing</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3>Mobile Access</h3>
+                <p>Browse and book from anywhere with our mobile-friendly design</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔔</div>
+                <h3>Price Alerts</h3>
+                <p>Get notified when your dream car drops in price</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3>Insurance Info</h3>
+                <p>Access insurance quotes and coverage information</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section" style="text-align: center; background: linear-gradient(135deg, rgba(26, 26, 26, 0.9), rgba(255, 61, 0, 0.2));">
+        <h2 style="font-family: 'Orbitron', sans-serif; font-size: 3rem; color: white; margin-bottom: 2rem;">Ready to Find Your Perfect Car?</h2>
+        <p style="font-size: 1.2rem; margin-bottom: 2rem; max-width: 600px; margin-left: auto; margin-right: auto;">Join thousands of satisfied customers who found their dream vehicle through AutoDrive</p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <a href="browse.html" class="btn btn-primary" style="font-size: 1.1rem; padding: 1rem 2rem;">Browse Cars Now</a>
+            <a href="contact.html" class="btn btn-outline" style="font-size: 1.1rem; padding: 1rem 2rem;">Contact Us</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>AutoDrive</h3>
+                <p>Your trusted partner in finding the perfect vehicle. Browse, compare, and drive away with confidence.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="browse.html">Browse Cars</a></li>
+                    <li><a href="dealerships.html">Find Dealerships</a></li>
+                    <li><a href="blog.html">Blog & Articles</a></li>
+                    <li><a href="upcoming.html">Upcoming Models</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Resources</h3>
+                <ul class="footer-links">
+                    <li><a href="calculator.html">Loan Calculator</a></li>
+                    <li><a href="insurance.html">Insurance Guide</a></li>
+                    <li><a href="maintenance.html">Maintenance Tips</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <ul class="footer-links">
+                    <li>📧 info@autodrive.com</li>
+                    <li>📱 1-800-AUTO-DRIVE</li>
+                    <li>📍 123 Car Street, Auto City</li>
+                    <li>🕒 Mon-Fri: 8AM-8PM</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 AutoDrive. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('loginModal')">&times;</span>
+            <h2>Login to AutoDrive</h2>
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="loginEmail" required placeholder="your@email.com">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="loginPassword" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Login</button>
+                <p style="text-align: center; margin-top: 1rem;">Don't have an account? <a href="#" onclick="closeModal('loginModal'); openModal('registerModal')" style="color: var(--primary);">Sign up</a></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal" id="registerModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('registerModal')">&times;</span>
+            <h2>Create Account</h2>
+            <form id="registerForm" onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="registerName" required placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="registerEmail" required placeholder="your@email.com">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="registerPassword" required placeholder="••••••••">
+                </div>
+                <div class="form-group">
+                    <label>Account Type</label>
+                    <select id="accountType" required>
+                        <option value="buyer">Car Buyer</option>
+                        <option value="dealer">Dealer</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Create Account</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+    <script>
+        function handleLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const name = email.split('@')[0];
+            
+            Auth.login({ name, email });
+            closeModal('loginModal');
+            showSuccessMessage('Login successful! Welcome back.');
+        }
+
+        function handleRegister(event) {
+            event.preventDefault();
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const type = document.getElementById('accountType').value;
+            
+            Auth.login({ name, email, type });
+            closeModal('registerModal');
+            showSuccessMessage('Account created successfully! Welcome to AutoDrive.');
+        }
+    </script>
+</body>
+</html>

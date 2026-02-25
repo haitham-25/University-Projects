@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ - AutoDrive</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Archivo:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .faq-item {
+            background: var(--secondary);
+            border: 2px solid rgba(255, 61, 0, 0.2);
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .faq-item:hover {
+            border-color: var(--primary);
+        }
+        .faq-question {
+            font-family: 'Orbitron', sans-serif;
+            color: white;
+            font-size: 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .faq-answer {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 61, 0, 0.2);
+            display: none;
+        }
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+        .faq-icon {
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">AUTODRIVE</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="browse.html">Browse Cars</a></li>
+                <li><a href="dealerships.html">Dealerships</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="auth-buttons"></div>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+        </nav>
+    </header>
+
+    <div class="page-container">
+        <div class="page-header">
+            <div class="page-header-content">
+                <h1>Frequently Asked Questions</h1>
+                <p>Find answers to common questions about AutoDrive</p>
+            </div>
+        </div>
+
+        <div class="section" style="max-width: 900px; margin: 0 auto;">
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                    <span>How do I book a test drive?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Booking a test drive is easy! Simply browse our car listings, find a vehicle you're interested in, and click the "Book Test Drive" button. Fill out the form with your preferred date, time, and dealership, and we'll confirm your appointment.</p>
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                    <span>Is there a fee for using AutoDrive?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>No! AutoDrive is completely free for car buyers. You can browse listings, compare vehicles, book test drives, and use all our tools at no cost.</p>
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                    <span>Can I compare multiple cars?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes! Our comparison tool allows you to compare up to 3 vehicles side-by-side. Simply add cars to your comparison list and view detailed specs, features, and pricing all in one place.</p>
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                    <span>How accurate are the prices listed?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>All prices are provided directly by dealerships and updated regularly. However, final pricing may vary based on location, trim level, options, and current promotions. We recommend contacting the dealership for the most current pricing.</p>
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                    <span>Do you offer financing?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>While AutoDrive doesn't directly provide financing, we offer a loan calculator to estimate monthly payments and connect you with dealerships that offer various financing options.</p>
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                    <span>Can I save my favorite cars?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Absolutely! Click the heart icon on any car listing to save it to your favorites. You can access your saved cars anytime from your dashboard.</p>
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                    <span>What if I need help during my car search?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Our support team is here to help! You can reach us via email at info@autodrive.com or call 1-800-AUTO-DRIVE during business hours. You can also visit any of our partner dealerships for in-person assistance.</p>
+                </div>
+            </div>
+
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-question">
+                    <span>Can I trade in my current vehicle?</span>
+                    <span class="faq-icon">+</span>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes! Most of our partner dealerships accept trade-ins. Contact the dealership directly or mention your trade-in when booking a test drive to discuss valuation options.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>AutoDrive</h3>
+                <p>Your trusted partner in finding the perfect vehicle.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="browse.html">Browse Cars</a></li>
+                    <li><a href="dealerships.html">Dealerships</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Resources</h3>
+                <ul class="footer-links">
+                    <li><a href="calculator.html">Loan Calculator</a></li>
+                    <li><a href="insurance.html">Insurance</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>📧 info@autodrive.com</p>
+                <p>📱 1-800-AUTO-DRIVE</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 AutoDrive. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+    <script>
+        function toggleFaq(element) {
+            const wasActive = element.classList.contains('active');
+            
+            // Close all FAQ items
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+                item.querySelector('.faq-icon').textContent = '+';
+            });
+            
+            // Open clicked item if it wasn't active
+            if (!wasActive) {
+                element.classList.add('active');
+                element.querySelector('.faq-icon').textContent = '−';
+            }
+        }
+    </script>
+</body>
+</html>

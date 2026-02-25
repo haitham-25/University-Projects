@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog & Articles - AutoDrive</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Archivo:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="index.html" class="logo">AUTODRIVE</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="browse.html">Browse Cars</a></li>
+                <li><a href="dealerships.html">Dealerships</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="auth-buttons"></div>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+        </nav>
+    </header>
+
+    <div class="page-container">
+        <div class="page-header">
+            <div class="page-header-content">
+                <h1>Blog & Articles</h1>
+                <p>Expert advice, car reviews, and industry insights</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="grid-3">
+                <div class="card">
+                    <div style="background: linear-gradient(135deg, #1A1A1A 0%, #2A2A2A 100%); height: 200px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 4rem; margin-bottom: 1.5rem;">📰</div>
+                    <h3 style="font-family: 'Orbitron', sans-serif; color: white; margin-bottom: 0.5rem;">Top 10 Electric Cars of 2026</h3>
+                    <p style="color: rgba(224, 224, 224, 0.6); font-size: 0.9rem; margin-bottom: 1rem;">January 25, 2026</p>
+                    <p style="margin-bottom: 1.5rem;">Discover the best electric vehicles hitting the market this year with our comprehensive review and comparison.</p>
+                    <a href="#" class="btn btn-outline" style="width: 100%;">Read More</a>
+                </div>
+
+                <div class="card">
+                    <div style="background: linear-gradient(135deg, #1A1A1A 0%, #2A2A2A 100%); height: 200px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 4rem; margin-bottom: 1.5rem;">💡</div>
+                    <h3 style="font-family: 'Orbitron', sans-serif; color: white; margin-bottom: 0.5rem;">How to Get the Best Car Loan Rate</h3>
+                    <p style="color: rgba(224, 224, 224, 0.6); font-size: 0.9rem; margin-bottom: 1rem;">January 20, 2026</p>
+                    <p style="margin-bottom: 1.5rem;">Learn insider tips and strategies to secure the lowest interest rates on your next car loan.</p>
+                    <a href="#" class="btn btn-outline" style="width: 100%;">Read More</a>
+                </div>
+
+                <div class="card">
+                    <div style="background: linear-gradient(135deg, #1A1A1A 0%, #2A2A2A 100%); height: 200px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 4rem; margin-bottom: 1.5rem;">🔧</div>
+                    <h3 style="font-family: 'Orbitron', sans-serif; color: white; margin-bottom: 0.5rem;">Essential Car Maintenance Guide</h3>
+                    <p style="color: rgba(224, 224, 224, 0.6); font-size: 0.9rem; margin-bottom: 1rem;">January 15, 2026</p>
+                    <p style="margin-bottom: 1.5rem;">Keep your vehicle running smoothly with our complete guide to regular maintenance and care.</p>
+                    <a href="#" class="btn btn-outline" style="width: 100%;">Read More</a>
+                </div>
+
+                <div class="card">
+                    <div style="background: linear-gradient(135deg, #1A1A1A 0%, #2A2A2A 100%); height: 200px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 4rem; margin-bottom: 1.5rem;">🚙</div>
+                    <h3 style="font-family: 'Orbitron', sans-serif; color: white; margin-bottom: 0.5rem;">SUV vs Sedan: Which is Right for You?</h3>
+                    <p style="color: rgba(224, 224, 224, 0.6); font-size: 0.9rem; margin-bottom: 1rem;">January 10, 2026</p>
+                    <p style="margin-bottom: 1.5rem;">We break down the pros and cons of each body type to help you make the right choice.</p>
+                    <a href="#" class="btn btn-outline" style="width: 100%;">Read More</a>
+                </div>
+
+                <div class="card">
+                    <div style="background: linear-gradient(135deg, #1A1A1A 0%, #2A2A2A 100%); height: 200px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 4rem; margin-bottom: 1.5rem;">🛡️</div>
+                    <h3 style="font-family: 'Orbitron', sans-serif; color: white; margin-bottom: 0.5rem;">Understanding Car Insurance Coverage</h3>
+                    <p style="color: rgba(224, 224, 224, 0.6); font-size: 0.9rem; margin-bottom: 1rem;">January 5, 2026</p>
+                    <p style="margin-bottom: 1.5rem;">Navigate the world of car insurance with our beginner-friendly guide to coverage types.</p>
+                    <a href="#" class="btn btn-outline" style="width: 100%;">Read More</a>
+                </div>
+
+                <div class="card">
+                    <div style="background: linear-gradient(135deg, #1A1A1A 0%, #2A2A2A 100%); height: 200px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 4rem; margin-bottom: 1.5rem;">⚡</div>
+                    <h3 style="font-family: 'Orbitron', sans-serif; color: white; margin-bottom: 0.5rem;">The Future of Electric Vehicles</h3>
+                    <p style="color: rgba(224, 224, 224, 0.6); font-size: 0.9rem; margin-bottom: 1rem;">December 30, 2025</p>
+                    <p style="margin-bottom: 1.5rem;">Explore upcoming innovations and trends that will shape the EV industry in the next decade.</p>
+                    <a href="#" class="btn btn-outline" style="width: 100%;">Read More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>AutoDrive</h3>
+                <p>Your trusted partner in finding the perfect vehicle.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="browse.html">Browse Cars</a></li>
+                    <li><a href="dealerships.html">Dealerships</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Resources</h3>
+                <ul class="footer-links">
+                    <li><a href="calculator.html">Loan Calculator</a></li>
+                    <li><a href="insurance.html">Insurance</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>📧 info@autodrive.com</p>
+                <p>📱 1-800-AUTO-DRIVE</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 AutoDrive. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+</body>
+</html>

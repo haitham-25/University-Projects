@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - AutoDrive</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Archivo:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(26, 26, 26, 0.9), rgba(255, 61, 0, 0.2));
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-container::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 61, 0, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        .auth-card {
+            background: var(--secondary);
+            padding: 3rem;
+            border-radius: 20px;
+            border: 2px solid var(--primary);
+            max-width: 550px;
+            width: 100%;
+            box-shadow: var(--shadow);
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .auth-logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .auth-logo h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            font-weight: 900;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .auth-logo p {
+            color: rgba(224, 224, 224, 0.7);
+            font-size: 1.1rem;
+        }
+
+        .auth-title {
+            font-family: 'Orbitron', sans-serif;
+            color: white;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .social-login {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            padding: 1rem;
+            border: 2px solid rgba(255, 61, 0, 0.3);
+            background: rgba(10, 10, 10, 0.5);
+            color: var(--text);
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .social-btn:hover {
+            border-color: var(--primary);
+            background: rgba(255, 61, 0, 0.1);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 2rem 0;
+            color: rgba(224, 224, 224, 0.5);
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid rgba(255, 61, 0, 0.3);
+        }
+
+        .divider span {
+            padding: 0 1rem;
+            font-weight: 600;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .password-strength {
+            margin-top: 0.5rem;
+            height: 4px;
+            background: rgba(255, 61, 0, 0.2);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .password-strength-bar {
+            height: 100%;
+            width: 0%;
+            background: var(--primary);
+            transition: width 0.3s, background 0.3s;
+        }
+
+        .password-strength-text {
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+            color: var(--text);
+        }
+
+        .terms-checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin: 1.5rem 0;
+            color: var(--text);
+        }
+
+        .terms-checkbox input {
+            margin-top: 0.25rem;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .terms-checkbox a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .terms-checkbox a:hover {
+            text-decoration: underline;
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 61, 0, 0.2);
+            color: var(--text);
+        }
+
+        .auth-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .back-home {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .back-home a {
+            color: var(--text);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .back-home a:hover {
+            color: var(--primary);
+        }
+
+        .account-type-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .account-type-option {
+            padding: 1.5rem;
+            border: 2px solid rgba(255, 61, 0, 0.3);
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: rgba(10, 10, 10, 0.5);
+        }
+
+        .account-type-option:hover {
+            border-color: var(--primary);
+        }
+
+        .account-type-option.selected {
+            border-color: var(--primary);
+            background: rgba(255, 61, 0, 0.1);
+        }
+
+        .account-type-option input[type="radio"] {
+            display: none;
+        }
+
+        .account-type-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .account-type-label {
+            font-weight: 600;
+            color: white;
+            margin-bottom: 0.25rem;
+        }
+
+        .account-type-desc {
+            font-size: 0.85rem;
+            color: rgba(224, 224, 224, 0.7);
+        }
+
+        @media (max-width: 768px) {
+            .auth-card {
+                padding: 2rem;
+            }
+
+            .auth-logo h1 {
+                font-size: 2.5rem;
+            }
+
+            .auth-title {
+                font-size: 1.5rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .account-type-selector {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="back-home">
+                <a href="index.html">← Back to Home</a>
+            </div>
+
+            <div class="auth-logo">
+                <h1>AUTODRIVE</h1>
+                <p>Start Your Journey Today</p>
+            </div>
+
+            <h2 class="auth-title">Create Account</h2>
+
+            <div class="social-login">
+                <button class="social-btn" onclick="socialSignup('google')">
+                    <span style="font-size: 1.5rem;">🔍</span>
+                    Sign up with Google
+                </button>
+                <button class="social-btn" onclick="socialSignup('facebook')">
+                    <span style="font-size: 1.5rem;">📘</span>
+                    Sign up with Facebook
+                </button>
+            </div>
+
+            <div class="divider">
+                <span>OR</span>
+            </div>
+
+            <form id="registerForm" onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label>I want to:</label>
+                    <div class="account-type-selector">
+                        <label class="account-type-option selected" onclick="selectAccountType('buyer', this)">
+                            <input type="radio" name="accountType" value="buyer" checked>
+                            <div class="account-type-icon">🚗</div>
+                            <div class="account-type-label">Buy a Car</div>
+                            <div class="account-type-desc">Browse and purchase</div>
+                        </label>
+                        <label class="account-type-option" onclick="selectAccountType('dealer', this)">
+                            <input type="radio" name="accountType" value="dealer">
+                            <div class="account-type-icon">🏢</div>
+                            <div class="account-type-label">Sell Cars</div>
+                            <div class="account-type-desc">Dealer account</div>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>First Name *</label>
+                        <input type="text" id="firstName" required placeholder="John">
+                    </div>
+                    <div class="form-group">
+                        <label>Last Name *</label>
+                        <input type="text" id="lastName" required placeholder="Doe">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Email Address *</label>
+                    <input type="email" id="registerEmail" required placeholder="your@email.com" autocomplete="email">
+                </div>
+
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" id="phone" placeholder="(555) 123-4567">
+                </div>
+
+                <div class="form-group">
+                    <label>Password *</label>
+                    <input type="password" id="registerPassword" required placeholder="Create a strong password" 
+                           oninput="checkPasswordStrength()" autocomplete="new-password" minlength="8">
+                    <div class="password-strength">
+                        <div class="password-strength-bar" id="strengthBar"></div>
+                    </div>
+                    <div class="password-strength-text" id="strengthText">Enter a password (min 8 characters)</div>
+                </div>
+
+                <div class="form-group">
+                    <label>Confirm Password *</label>
+                    <input type="password" id="confirmPassword" required placeholder="Re-enter your password" 
+                           autocomplete="new-password" minlength="8">
+                </div>
+
+                <div class="terms-checkbox">
+                    <input type="checkbox" id="agreeTerms" required>
+                    <label for="agreeTerms">
+                        I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+                    </label>
+                </div>
+
+                <div class="terms-checkbox">
+                    <input type="checkbox" id="newsletter">
+                    <label for="newsletter">
+                        Send me updates about new cars, deals, and automotive news
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1.1rem; padding: 1rem;">
+                    Create Account
+                </button>
+            </form>
+
+            <div class="auth-footer">
+                Already have an account? <a href="login.html">Sign In</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+    <script>
+        let selectedAccountType = 'buyer';
+
+        function selectAccountType(type, element) {
+            selectedAccountType = type;
+            document.querySelectorAll('.account-type-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            element.classList.add('selected');
+        }
+
+        function checkPasswordStrength() {
+            const password = document.getElementById('registerPassword').value;
+            const strengthBar = document.getElementById('strengthBar');
+            const strengthText = document.getElementById('strengthText');
+            
+            let strength = 0;
+            
+            if (password.length >= 8) strength++;
+            if (password.length >= 12) strength++;
+            if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^a-zA-Z0-9]/.test(password)) strength++;
+            
+            const percentage = (strength / 5) * 100;
+            strengthBar.style.width = percentage + '%';
+            
+            if (strength <= 1) {
+                strengthBar.style.background = '#ff0000';
+                strengthText.textContent = 'Weak password';
+                strengthText.style.color = '#ff0000';
+            } else if (strength <= 3) {
+                strengthBar.style.background = '#ffa500';
+                strengthText.textContent = 'Medium password';
+                strengthText.style.color = '#ffa500';
+            } else {
+                strengthBar.style.background = '#00ff00';
+                strengthText.textContent = 'Strong password';
+                strengthText.style.color = '#00ff00';
+            }
+        }
+
+        function handleRegister(event) {
+            event.preventDefault();
+            
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const email = document.getElementById('registerEmail').value;
+            const phone = document.getElementById('phone').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const agreeTerms = document.getElementById('agreeTerms').checked;
+            const newsletter = document.getElementById('newsletter').checked;
+            
+            // Validate passwords match
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+            
+            // Validate terms agreement
+            if (!agreeTerms) {
+                alert('Please agree to the Terms of Service and Privacy Policy');
+                return;
+            }
+            
+            // Create user data
+            const userData = {
+                name: firstName + ' ' + lastName,
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                phone: phone,
+                accountType: selectedAccountType,
+                newsletter: newsletter,
+                registrationDate: new Date().toISOString()
+            };
+            
+            // Save user
+            Auth.login(userData);
+            
+            // Show success message
+            showSuccessMessage('Account created successfully! Welcome to AutoDrive, ' + firstName + '!');
+            
+            // Redirect to home page
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1500);
+        }
+
+        function socialSignup(provider) {
+            showSuccessMessage(`${provider.charAt(0).toUpperCase() + provider.slice(1)} signup coming soon!`);
+        }
+
+        // Check if user is already logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            if (Auth.isLoggedIn()) {
+                const redirect = confirm('You are already logged in. Go to home page?');
+                if (redirect) {
+                    window.location.href = 'index.html';
+                }
+            }
+        });
+    </script>
+</body>
+</html>

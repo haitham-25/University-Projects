@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Loan Calculator - AutoDrive</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Archivo:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .calculator-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .calculator-card {
+            background: var(--secondary);
+            padding: 3rem;
+            border-radius: 15px;
+            border: 2px solid rgba(255, 61, 0, 0.3);
+        }
+
+        .input-section {
+            display: grid;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .input-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .result-section {
+            background: rgba(255, 61, 0, 0.1);
+            padding: 3rem;
+            border-radius: 10px;
+            border: 2px solid rgba(255, 61, 0, 0.3);
+            text-align: center;
+        }
+
+        .monthly-payment {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4rem;
+            color: var(--primary);
+            margin: 1rem 0;
+            font-weight: 900;
+        }
+
+        .payment-label {
+            font-size: 1.2rem;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .breakdown {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 2px solid rgba(255, 61, 0, 0.2);
+        }
+
+        .breakdown-item {
+            text-align: center;
+        }
+
+        .breakdown-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .breakdown-label {
+            color: rgba(224, 224, 224, 0.7);
+            font-size: 0.9rem;
+        }
+
+        .slider-container {
+            margin-top: 1rem;
+        }
+
+        .slider {
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: rgba(255, 61, 0, 0.2);
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--gradient);
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(255, 61, 0, 0.5);
+        }
+
+        .slider::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--gradient);
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 4px 12px rgba(255, 61, 0, 0.5);
+        }
+
+        .value-display {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .input-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .breakdown {
+                grid-template-columns: 1fr;
+            }
+            
+            .monthly-payment {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="index.html" class="logo">AUTODRIVE</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="browse.html">Browse Cars</a></li>
+                <li><a href="dealerships.html">Dealerships</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="auth-buttons"></div>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+        </nav>
+    </header>
+
+    <div class="page-container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="page-header-content">
+                <h1>Car Loan Calculator</h1>
+                <p>Calculate your monthly payments and total loan costs instantly</p>
+            </div>
+        </div>
+
+        <!-- Calculator -->
+        <div class="calculator-container">
+            <div class="calculator-card">
+                <div class="input-section">
+                    <div class="form-group">
+                        <label>Vehicle Price</label>
+                        <input type="number" id="vehiclePrice" value="50000" oninput="calculateLoan()" class="form-group input" style="font-size: 1.2rem; font-weight: 600;">
+                        <div class="slider-container">
+                            <input type="range" min="10000" max="200000" step="1000" value="50000" id="priceSlider" class="slider" oninput="updatePrice(this.value)">
+                            <div class="value-display">
+                                <span>$10,000</span>
+                                <span>$200,000</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-row">
+                        <div class="form-group">
+                            <label>Down Payment</label>
+                            <input type="number" id="downPayment" value="10000" oninput="calculateLoan()" class="form-group input" style="font-size: 1.2rem; font-weight: 600;">
+                            <div class="slider-container">
+                                <input type="range" min="0" max="50000" step="1000" value="10000" id="downSlider" class="slider" oninput="updateDown(this.value)">
+                                <div class="value-display">
+                                    <span>$0</span>
+                                    <span>$50,000</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Interest Rate (%)</label>
+                            <input type="number" id="interestRate" value="4.5" step="0.1" oninput="calculateLoan()" class="form-group input" style="font-size: 1.2rem; font-weight: 600;">
+                            <div class="slider-container">
+                                <input type="range" min="0" max="15" step="0.1" value="4.5" id="rateSlider" class="slider" oninput="updateRate(this.value)">
+                                <div class="value-display">
+                                    <span>0%</span>
+                                    <span>15%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Loan Term</label>
+                        <select id="loanTerm" onchange="calculateLoan()" class="form-group input" style="font-size: 1.2rem; font-weight: 600;">
+                            <option value="36">36 months (3 years)</option>
+                            <option value="48">48 months (4 years)</option>
+                            <option value="60" selected>60 months (5 years)</option>
+                            <option value="72">72 months (6 years)</option>
+                            <option value="84">84 months (7 years)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="result-section">
+                    <div class="payment-label">Estimated Monthly Payment</div>
+                    <div class="monthly-payment" id="monthlyPayment">$745</div>
+                    
+                    <div class="breakdown">
+                        <div class="breakdown-item">
+                            <div class="breakdown-value" id="totalLoan">$40,000</div>
+                            <div class="breakdown-label">Total Loan Amount</div>
+                        </div>
+                        <div class="breakdown-item">
+                            <div class="breakdown-value" id="totalInterest">$4,700</div>
+                            <div class="breakdown-label">Total Interest</div>
+                        </div>
+                        <div class="breakdown-item">
+                            <div class="breakdown-value" id="totalCost">$44,700</div>
+                            <div class="breakdown-label">Total Amount Paid</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 2rem; padding: 2rem; background: rgba(10, 10, 10, 0.5); border-radius: 10px;">
+                    <h3 style="color: white; margin-bottom: 1rem; font-family: 'Orbitron', sans-serif;">Tips for Getting the Best Rate</h3>
+                    <ul style="color: var(--text); line-height: 2;">
+                        <li>• Maintain a good credit score (700+) for better interest rates</li>
+                        <li>• Consider a larger down payment to reduce monthly costs</li>
+                        <li>• Shop around and compare offers from multiple lenders</li>
+                        <li>• Shorter loan terms mean less interest paid overall</li>
+                        <li>• Get pre-approved before shopping to know your budget</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>AutoDrive</h3>
+                <p>Your trusted partner in finding the perfect vehicle.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="browse.html">Browse Cars</a></li>
+                    <li><a href="dealerships.html">Dealerships</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Resources</h3>
+                <ul class="footer-links">
+                    <li><a href="calculator.html">Loan Calculator</a></li>
+                    <li><a href="insurance.html">Insurance</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>📧 info@autodrive.com</p>
+                <p>📱 1-800-AUTO-DRIVE</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 AutoDrive. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="main.js"></script>
+    <script>
+        function calculateLoan() {
+            const price = parseFloat(document.getElementById('vehiclePrice').value) || 0;
+            const down = parseFloat(document.getElementById('downPayment').value) || 0;
+            const rate = parseFloat(document.getElementById('interestRate').value) || 0;
+            const term = parseInt(document.getElementById('loanTerm').value) || 60;
+
+            const loanAmount = price - down;
+            const monthlyRate = (rate / 100) / 12;
+            
+            let monthlyPayment;
+            if (monthlyRate === 0) {
+                monthlyPayment = loanAmount / term;
+            } else {
+                monthlyPayment = loanAmount * (monthlyRate * Math.pow(1 + monthlyRate, term)) / (Math.pow(1 + monthlyRate, term) - 1);
+            }
+            
+            const totalPaid = monthlyPayment * term;
+            const totalInterest = totalPaid - loanAmount;
+
+            document.getElementById('monthlyPayment').textContent = formatCurrency(monthlyPayment);
+            document.getElementById('totalLoan').textContent = formatCurrency(loanAmount);
+            document.getElementById('totalInterest').textContent = formatCurrency(totalInterest);
+            document.getElementById('totalCost').textContent = formatCurrency(totalPaid);
+        }
+
+        function updatePrice(value) {
+            document.getElementById('vehiclePrice').value = value;
+            calculateLoan();
+        }
+
+        function updateDown(value) {
+            document.getElementById('downPayment').value = value;
+            calculateLoan();
+        }
+
+        function updateRate(value) {
+            document.getElementById('interestRate').value = value;
+            calculateLoan();
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', calculateLoan);
+    </script>
+</body>
+</html>

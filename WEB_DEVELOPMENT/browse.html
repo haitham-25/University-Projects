@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Cars - AutoDrive</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Archivo:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .filter-sidebar {
+            background: var(--secondary);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 2px solid rgba(255, 61, 0, 0.2);
+            position: sticky;
+            top: 100px;
+        }
+
+        .filter-sidebar h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: white;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .filter-group {
+            margin-bottom: 2rem;
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .browse-layout {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .car-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .car-card {
+            background: var(--secondary);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.4s;
+            border: 2px solid rgba(255, 61, 0, 0.2);
+            position: relative;
+        }
+
+        .car-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, transparent 0%, rgba(255, 61, 0, 0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .car-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow);
+            border-color: var(--primary);
+        }
+
+        .car-card:hover::before {
+            opacity: 1;
+        }
+
+        .car-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, #1A1A1A 0%, #2A2A2A 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .car-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--gradient);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .save-btn {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(10, 10, 10, 0.9);
+            border: 2px solid rgba(255, 61, 0, 0.5);
+            color: var(--primary);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .save-btn:hover, .save-btn.saved {
+            background: var(--primary);
+            color: white;
+        }
+
+        .car-info {
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .car-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+
+        .car-specs {
+            display: flex;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .spec {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: rgba(224, 224, 224, 0.8);
+        }
+
+        .car-price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .car-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-small {
+            padding: 0.75rem 1.5rem;
+            flex: 1;
+            font-size: 0.9rem;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: normal;
+            cursor: pointer;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 1024px) {
+            .browse-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .filter-sidebar {
+                position: static;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .car-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="index.html" class="logo">AUTODRIVE</a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="browse.html">Browse Cars</a></li>
+                <li><a href="dealerships.html">Dealerships</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="auth-buttons"></div>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+        </nav>
+    </header>
+
+    <div class="page-container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="page-header-content">
+                <h1>Browse Our Collection</h1>
+                <p>Explore thousands of premium vehicles from trusted dealerships</p>
+            </div>
+        </div>
+
+        <!-- Browse Layout -->
+        <div class="browse-layout">
+            <!-- Filters -->
+            <aside class="filter-sidebar">
+                <h3>Filter Results</h3>
+                
+                <div class="filter-group">
+                    <label>Price Range</label>
+                    <select class="form-group input" style="width: 100%;" id="filterPrice">
+                        <option value="">Any Price</option>
+                        <option value="0-20000">Under $20,000</option>
+                        <option value="20000-40000">$20,000 - $40,000</option>
+                        <option value="40000-60000">$40,000 - $60,000</option>
+                        <option value="60000-80000">$60,000 - $80,000</option>
+                        <option value="80000+">$80,000+</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>Body Type</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" value="sedan"> Sedan</label>
+                        <label><input type="checkbox" value="suv"> SUV</label>
+                        <label><input type="checkbox" value="truck"> Truck</label>
+                        <label><input type="checkbox" value="coupe"> Coupe</label>
+                        <label><input type="checkbox" value="convertible"> Convertible</label>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <label>Fuel Type</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" value="electric"> Electric</label>
+                        <label><input type="checkbox" value="hybrid"> Hybrid</label>
+                        <label><input type="checkbox" value="gas"> Gasoline</label>
+                        <label><input type="checkbox" value="diesel"> Diesel</label>
+                    </div>
+                </div>
+
+                <div class="filter-group">
+                    <label>Year</label>
+                    <select class="form-group input" style="width: 100%;">
+                        <option value="">Any Year</option>
+                        <option value="2026">2026</option>
+                        <option value="2025">2025</option>
+                        <option value="2024">2024</option>
+                        <option value="2023">2023</option>
+                        <option value="2022">2022</option>
+                        <option value="older">2021 and Older</option>
+                    </select>
+                </div>
+
+                <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Apply Filters</button>
+                <button class="btn btn-outline" style="width: 100%; margin-top: 0.5rem;">Reset</button>
+            </aside>
+
+            <!-- Car Grid -->
+            <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <p style="color: var(--text);"><span style="color: var(--primary); font-weight: 700;">156</span> vehicles found</p>
+                    <select style="padding: 0.75rem; background: var(--secondary); color: var(--text); border: 2px solid rgba(255, 61, 0, 0.3); border-radius: 8px;">
+                        <option>Sort by: Featured</option>
+                        <option>Price: Low to High</option>
+                        <option>Price: High to Low</option>
+                        <option>Year: Newest</option>
+                        <option>Year: Oldest</option>
+                    </select>
+                </div>
+
+                <div class="car-grid" id="carGrid">
+                    <!-- Cars will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>AutoDrive</h3>
+                <p>Your trusted partner in finding the perfect vehicle.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="browse.html">Browse Cars</a></li>
+                    <li><a href="dealerships.html">Dealerships</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Resources</h3>
+                <ul class="footer-links">
+                    <li><a href="calculator.html">Loan Calculator</a></li>
+                    <li><a href="insurance.html">Insurance</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>📧 info@autodrive.com</p>
+                <p>📱 1-800-AUTO-DRIVE</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 AutoDrive. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Test Drive Modal -->
+    <div class="modal" id="testDriveModal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('testDriveModal')">&times;</span>
+            <h2>Book Test Drive</h2>
+            <form id="testDriveForm" onsubmit="handleTestDrive(event)">
+                <div class="form-group">
+                    <label>Vehicle</label>
+                    <input type="text" id="testDriveVehicle" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Your Name</label>
+                    <input type="text" required placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" required placeholder="your@email.com">
+                </div>
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="tel" required placeholder="(555) 123-4567">
+                </div>
+                <div class="form-group">
+                    <label>Preferred Date</label>
+                    <input type="date" required>
+                </div>
+                <div class="form-group">
+                    <label>Preferred Time</label>
+                    <select required>
+                        <option value="">Select time</option>
+                        <option value="9am">9:00 AM</option>
+                        <option value="10am">10:00 AM</option>
+                        <option value="11am">11:00 AM</option>
+                        <option value="1pm">1:00 PM</option>
+                        <option value="2pm">2:00 PM</option>
+                        <option value="3pm">3:00 PM</option>
+                        <option value="4pm">4:00 PM</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Book Test Drive</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+    <script src="cars.js"></script>
+    <script>
+        // Load cars on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCars();
+        });
+
+        function loadCars() {
+            const carGrid = document.getElementById('carGrid');
+            carGrid.innerHTML = cars.map(car => createCarCard(car)).join('');
+        }
+
+        function createCarCard(car) {
+            const isSaved = SavedCars.isSaved(car.id);
+            return `
+                <div class="car-card fade-in">
+                    <div class="car-image">
+                        ${car.icon}
+                        ${car.badge ? `<span class="car-badge">${car.badge}</span>` : ''}
+                        <button class="save-btn ${isSaved ? 'saved' : ''}" onclick="toggleSave(${car.id})" title="${isSaved ? 'Remove from favorites' : 'Save to favorites'}">
+                            ${isSaved ? '❤️' : '🤍'}
+                        </button>
+                    </div>
+                    <div class="car-info">
+                        <h3 class="car-title">${car.name}</h3>
+                        <div class="car-specs">
+                            ${car.specs.map(spec => `<span class="spec">${spec}</span>`).join('')}
+                        </div>
+                        <div class="car-price">${formatCurrency(car.price)}</div>
+                        <div class="car-actions">
+                            <button class="btn btn-primary btn-small" onclick="bookTestDrive('${car.name}')">Book Test Drive</button>
+                            <button class="btn btn-outline btn-small" onclick="viewDetails(${car.id})">Details</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function toggleSave(carId) {
+            const car = cars.find(c => c.id === carId);
+            if (SavedCars.isSaved(carId)) {
+                SavedCars.remove(carId);
+            } else {
+                SavedCars.save(car);
+            }
+            loadCars();
+        }
+
+        function bookTestDrive(carName) {
+            document.getElementById('testDriveVehicle').value = carName;
+            openModal('testDriveModal');
+        }
+
+        function viewDetails(carId) {
+            window.location.href = `car-details.html?id=${carId}`;
+        }
+
+        function handleTestDrive(event) {
+            event.preventDefault();
+            const vehicle = document.getElementById('testDriveVehicle').value;
+            const booking = {
+                vehicle: vehicle,
+                date: new Date().toISOString(),
+                status: 'pending'
+            };
+            TestDrives.book(booking);
+            closeModal('testDriveModal');
+            showSuccessMessage('Test drive booked successfully!');
+        }
+    </script>
+</body>
+</html>

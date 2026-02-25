@@ -1,0 +1,142 @@
+==========================================
+  AUTODRIVE - QUICK START GUIDE
+==========================================
+
+🚀 HOW TO RUN THE WEBSITE:
+
+1. Extract the 'car-website' folder to your computer
+2. Open 'index.html' in any modern web browser
+3. That's it! No installation or server required.
+
+==========================================
+📁 WEBSITE STRUCTURE:
+==========================================
+
+car-website/
+  ├── index.html              ← START HERE!
+  ├── css/
+  │   └── style.css
+  ├── js/
+  │   ├── main.js
+  │   └── cars.js
+  └── pages/
+      ├── browse.html
+      ├── calculator.html
+      ├── dealerships.html
+      ├── contact.html
+      ├── blog.html
+      └── faq.html
+
+==========================================
+✨ AVAILABLE PAGES:
+==========================================
+
+HOME PAGE (index.html)
+- Hero section with search
+- Statistics showcase
+- Features overview
+- Call-to-action sections
+
+BROWSE CARS (pages/browse.html)
+- 15+ vehicles with filters
+- Save to favorites
+- Book test drives
+- Advanced search
+
+LOAN CALCULATOR (pages/calculator.html)
+- Interactive payment calculator
+- Adjustable sliders
+- Real-time calculations
+- Financial tips
+
+DEALERSHIPS (pages/dealerships.html)
+- 6 dealership locations
+- Contact information
+- Ratings and hours
+
+CONTACT (pages/contact.html)
+- Contact form
+- Business information
+- Social media links
+
+BLOG (pages/blog.html)
+- 6 articles
+- Car tips and reviews
+
+FAQ (pages/faq.html)
+- 8 common questions
+- Interactive accordion
+
+==========================================
+🔑 KEY FEATURES:
+==========================================
+
+✓ User login/registration
+✓ Save favorite cars
+✓ Book test drives
+✓ Compare vehicles
+✓ Calculate loan payments
+✓ Search and filter cars
+✓ View dealerships
+✓ Read articles
+✓ Get answers to FAQs
+✓ Fully responsive design
+✓ Dark theme
+✓ Smooth animations
+
+==========================================
+💾 DATA PERSISTENCE:
+==========================================
+
+The website uses browser localStorage to save:
+- User login information
+- Saved/favorite cars
+- Test drive bookings
+- Comparison lists
+
+Data persists across sessions in the same browser.
+
+==========================================
+📱 RESPONSIVE:
+==========================================
+
+Works perfectly on:
+✓ Desktop computers
+✓ Laptops
+✓ Tablets
+✓ Mobile phones
+
+==========================================
+🎨 CUSTOMIZATION:
+==========================================
+
+To customize colors:
+- Edit css/style.css (see :root variables)
+
+To add/modify cars:
+- Edit js/cars.js
+
+To change functionality:
+- Edit js/main.js
+
+==========================================
+🌐 BROWSER SUPPORT:
+==========================================
+
+Works best in:
+✓ Chrome/Edge (latest)
+✓ Firefox (latest)
+✓ Safari (latest)
+✓ Opera (latest)
+
+==========================================
+📞 SUPPORT:
+==========================================
+
+This is a demonstration project.
+All features are frontend-only.
+No backend or database required.
+
+==========================================
+🎯 ENJOY YOUR AUTODRIVE WEBSITE!
+==========================================
