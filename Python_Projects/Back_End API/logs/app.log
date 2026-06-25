@@ -1,0 +1,109 @@
+2026-05-10T16:10:32.082203+0300 | INFO | GET / -> 200 (1.39ms)
+2026-05-10T16:10:41.244096+0300 | INFO | GET / -> 200 (0.7ms)
+2026-05-10T16:10:41.301414+0300 | INFO | GET /favicon.ico -> 404 (0.2ms)
+2026-05-10T16:10:46.843923+0300 | INFO | GET /docs -> 200 (0.29ms)
+2026-05-10T16:10:47.529137+0300 | INFO | GET /openapi.json -> 200 (51.84ms)
+2026-05-10T16:11:10.795525+0300 | INFO | User logged in: admin@gmail.com
+2026-05-10T16:11:10.796109+0300 | INFO | POST /auth/login -> 200 (252.41ms)
+2026-05-10T16:11:20.240024+0300 | INFO | GET /students/ -> 401 (1.89ms)
+2026-05-10T16:11:33.892331+0300 | INFO | User logged in: admin@gmail.com
+2026-05-10T16:11:33.892840+0300 | INFO | POST /auth/login -> 200 (219.04ms)
+2026-05-10T16:14:39.159432+0300 | WARNING | Failed login attempt for: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJyb2xlIjoiYWRtaW4iLCJleHAiOjE3Nzg0MjIyOTN9.AFSjDtH01gGbIz0X8zi3xYb36F2FD0tk7ADUBjXgYh8
+2026-05-10T16:14:39.160755+0300 | INFO | POST /auth/login -> 401 (5.93ms)
+2026-05-10T16:14:44.673465+0300 | INFO | POST /auth/login -> 422 (1.38ms)
+2026-05-10T20:12:08.812209+0000 | INFO | GET /docs -> 200 (0.2ms)
+2026-05-10T20:12:08.942735+0000 | INFO | GET /openapi.json -> 200 (53.02ms)
+2026-05-10T20:12:17.300223+0000 | INFO | POST /auth/login -> 422 (6.03ms)
+2026-05-10T20:12:18.786094+0000 | INFO | POST /auth/login -> 422 (0.87ms)
+2026-05-10T20:12:19.317038+0000 | INFO | POST /auth/login -> 422 (0.84ms)
+2026-05-10T20:12:19.740611+0000 | INFO | POST /auth/login -> 422 (0.94ms)
+2026-05-10T20:12:19.924786+0000 | INFO | POST /auth/login -> 422 (0.76ms)
+2026-05-10T20:12:20.091277+0000 | INFO | POST /auth/login -> 422 (0.94ms)
+2026-05-10T20:13:01.663730+0000 | INFO | GET /docs -> 200 (0.26ms)
+2026-05-10T20:13:01.755294+0000 | INFO | GET /openapi.json -> 200 (40.15ms)
+2026-05-10T20:13:05.236532+0000 | INFO | POST /auth/login -> 422 (4.8ms)
+2026-05-10T20:13:06.143922+0000 | INFO | POST /auth/login -> 422 (0.89ms)
+2026-05-10T20:14:10.382564+0000 | INFO | GET /docs -> 200 (0.39ms)
+2026-05-10T20:14:10.468804+0000 | INFO | GET /openapi.json -> 200 (0.57ms)
+2026-05-10T20:14:56.520647+0000 | INFO | GET /docs -> 200 (0.18ms)
+2026-05-10T20:14:56.644806+0000 | INFO | GET /openapi.json -> 200 (45.13ms)
+2026-05-10T20:15:04.603668+0000 | INFO | POST /auth/login -> 422 (3.89ms)
+2026-05-10T20:15:26.953632+0000 | INFO | User logged in: admin@gmail.com
+2026-05-10T20:15:26.954489+0000 | INFO | POST /auth/login -> 200 (212.68ms)
+2026-05-10T20:16:09.689630+0000 | INFO | Cache MISS — fetched 1 students from DB
+2026-05-10T20:16:09.728409+0000 | INFO | GET /students/ -> 200 (52.01ms)
+2026-05-10T20:16:22.100953+0000 | INFO | GET /app -> 307 (0.26ms)
+2026-05-10T20:16:22.106713+0000 | INFO | GET /app/ -> 200 (1.47ms)
+2026-05-10T20:16:22.156637+0000 | INFO | GET /favicon.ico -> 404 (0.22ms)
+2026-05-10T20:16:29.557956+0000 | INFO | OPTIONS /auth/login -> 200 (0.13ms)
+2026-05-10T20:16:29.752425+0000 | INFO | User logged in: admin@gmail.com
+2026-05-10T20:16:29.753051+0000 | INFO | POST /auth/login -> 200 (192.77ms)
+2026-05-10T20:16:29.757120+0000 | INFO | OPTIONS /students/ -> 200 (0.12ms)
+2026-05-10T20:16:29.761424+0000 | INFO | Cache HIT for all students
+2026-05-10T20:16:29.762293+0000 | INFO | GET /students/ -> 200 (3.15ms)
+2026-05-10T20:16:59.469112+0000 | INFO | OPTIONS /students/ -> 200 (0.16ms)
+2026-05-10T20:16:59.696343+0000 | INFO | Admin created student: m4m4 (user_id=3)
+2026-05-10T20:16:59.697532+0000 | INFO | POST /students/ -> 201 (226.25ms)
+2026-05-10T20:16:59.705018+0000 | INFO | Cache MISS — fetched 2 students from DB
+2026-05-10T20:16:59.706152+0000 | INFO | GET /students/ -> 200 (4.2ms)
+2026-05-10T20:17:01.767134+0000 | INFO | OPTIONS /students/2/courses/ -> 200 (0.11ms)
+2026-05-10T20:17:01.774165+0000 | INFO | Cache MISS — fetched 0 courses for student 2
+2026-05-10T20:17:01.774901+0000 | INFO | GET /students/2/courses/ -> 200 (5.94ms)
+2026-05-10T20:17:11.471482+0000 | INFO | Course CS101 created for student 2 by admin@gmail.com
+2026-05-10T20:17:11.472405+0000 | INFO | POST /students/2/courses/ -> 201 (27.12ms)
+2026-05-10T20:17:11.476387+0000 | INFO | OPTIONS /students/null/courses/ -> 200 (0.1ms)
+2026-05-10T20:17:11.480515+0000 | INFO | GET /students/null/courses/ -> 422 (1.81ms)
+2026-05-10T20:17:13.336855+0000 | INFO | Cache MISS — fetched 1 courses for student 2
+2026-05-10T20:17:13.337662+0000 | INFO | GET /students/2/courses/ -> 200 (3.23ms)
+2026-05-10T20:17:19.612621+0000 | INFO | OPTIONS /monitoring/stats -> 200 (0.13ms)
+2026-05-10T20:17:19.616333+0000 | INFO | GET /monitoring/stats -> 200 (1.64ms)
+2026-05-10T20:17:30.089344+0000 | WARNING | Failed login attempt for: Haitham@gmail.com
+2026-05-10T20:17:30.090057+0000 | INFO | POST /auth/login -> 401 (2.11ms)
+2026-05-10T20:17:35.064223+0000 | INFO | User logged in: haitham@gmail.com
+2026-05-10T20:17:35.065049+0000 | INFO | POST /auth/login -> 200 (194.04ms)
+2026-05-10T20:17:35.069836+0000 | INFO | OPTIONS /students/me -> 200 (0.11ms)
+2026-05-10T20:17:35.075338+0000 | INFO | GET /students/me -> 200 (3.48ms)
+2026-05-10T20:17:35.101732+0000 | INFO | OPTIONS /students/1/courses/ -> 200 (0.24ms)
+2026-05-10T20:17:35.108696+0000 | INFO | Cache MISS — fetched 1 courses for student 1
+2026-05-10T20:17:35.109779+0000 | INFO | GET /students/1/courses/ -> 200 (5.4ms)
+2026-05-10T20:17:38.872463+0000 | INFO | Cache HIT for student user_id=1
+2026-05-10T20:17:38.873436+0000 | INFO | GET /students/me -> 200 (2.74ms)
+2026-05-10T20:17:47.202122+0000 | INFO | Cache HIT for student user_id=1
+2026-05-10T20:17:47.206615+0000 | INFO | PUT /students/me -> 400 (6.78ms)
+2026-05-10T20:17:52.184015+0000 | INFO | Cache HIT for student user_id=1
+2026-05-10T20:17:52.184897+0000 | INFO | GET /students/me -> 200 (2.87ms)
+2026-05-10T20:17:58.855071+0000 | INFO | Cache HIT for student user_id=1
+2026-05-10T20:17:58.855990+0000 | INFO | GET /students/me -> 200 (2.62ms)
+2026-05-10T20:18:19.902143+0000 | INFO | GET /docs -> 200 (0.22ms)
+2026-05-10T20:18:19.978996+0000 | INFO | GET /openapi.json -> 200 (0.56ms)
+2026-05-10T20:18:35.568762+0000 | INFO | User logged in: admin@gmail.com
+2026-05-10T20:18:35.569364+0000 | INFO | POST /auth/login -> 200 (193.73ms)
+2026-05-10T20:18:50.696098+0000 | INFO | Cache HIT for student 1
+2026-05-10T20:18:50.697462+0000 | INFO | GET /students/1 -> 200 (4.47ms)
+2026-05-10T20:19:16.594241+0000 | INFO | Cache HIT — courses for student 1
+2026-05-10T20:19:16.595001+0000 | INFO | GET /students/1/courses/ -> 200 (3.12ms)
+2026-05-10T20:20:24.830231+0000 | INFO | Course CS102 created for student 1 by admin@gmail.com
+2026-05-10T20:20:24.831288+0000 | INFO | POST /students/1/courses/ -> 201 (27.88ms)
+2026-05-10T20:20:44.240723+0000 | INFO | GET /students/1/courses/3 -> 200 (7.56ms)
+2026-05-10T20:20:53.695698+0000 | INFO | GET /monitoring/health -> 200 (0.75ms)
+2026-05-10T20:21:33.213323+0000 | INFO | User logged in: haitham@gmail.com
+2026-05-10T20:21:33.214121+0000 | INFO | POST /auth/login -> 200 (191.36ms)
+2026-05-10T20:21:42.178483+0000 | INFO | Cache HIT for student user_id=1
+2026-05-10T20:21:42.179528+0000 | INFO | GET /students/ -> 200 (3.77ms)
+2026-05-10T20:21:57.726549+0000 | INFO | GET /students/3 -> 404 (2.9ms)
+2026-05-10T20:22:02.263195+0000 | INFO | GET /students/2 -> 403 (3.22ms)
+2026-05-10T20:22:13.421087+0000 | INFO | Cache HIT for student 1
+2026-05-10T20:22:13.422777+0000 | INFO | Cache MISS — fetched 2 courses for student 1
+2026-05-10T20:22:13.423631+0000 | INFO | GET /students/1/courses/ -> 200 (4.47ms)
+2026-05-10T20:23:05.749582+0000 | INFO | GET /app -> 307 (0.26ms)
+2026-05-10T20:23:21.221924+0000 | INFO | User logged in: m4m4@gmail.com
+2026-05-10T20:23:21.222605+0000 | INFO | POST /auth/login -> 200 (192.39ms)
+2026-05-10T20:23:21.231123+0000 | INFO | GET /students/me -> 200 (3.3ms)
+2026-05-10T20:23:21.253681+0000 | INFO | Cache HIT for student 2
+2026-05-10T20:23:21.255970+0000 | INFO | Cache MISS — fetched 1 courses for student 2
+2026-05-10T20:23:21.256991+0000 | INFO | GET /students/2/courses/ -> 200 (5.89ms)
+2026-05-10T20:23:28.773798+0000 | INFO | User logged in: haitham@gmail.com
+2026-05-10T20:23:28.774374+0000 | INFO | POST /auth/login -> 200 (192.96ms)
+2026-05-10T20:23:28.781506+0000 | INFO | GET /students/me -> 200 (3.3ms)
+2026-05-10T20:23:28.788430+0000 | INFO | Cache HIT — courses for student 1
+2026-05-10T20:23:28.789343+0000 | INFO | GET /students/1/courses/ -> 200 (3.69ms)
