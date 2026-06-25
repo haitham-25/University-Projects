@@ -1,0 +1,363 @@
+==============================================================
+  SYSTEM DOCUMENTATION
+  Store Rewards & Points — Project 4
+  Technologies of Cryptocurrencies — HNU
+==============================================================
+
+  Version      : 2.0 (Final Submission — Fully Compliant)
+  Last Updated : 2025
+
+==============================================================
+  SECTION 1 — TASK SUMMARY (REQUIRED COUNTS)
+==============================================================
+
+Admin Tasks (6)
+
+1.  Add user
+2.  Remove user
+3.  Mint reward tokens
+4.  Burn tokens
+5.  Pause / unpause system
+6.  Transfer ownership
+
+User Tasks (5)
+
+1.  Earn rewards
+2.  Redeem rewards
+3.  Transfer tokens
+4.  View balance
+5.  View transaction history
+
+System Tasks (7)
+
+1.  auto_reward_distribution.py
+2.  fraud_detection.py
+3.  scheduled_snapshots.py
+4.  activity_logger.py
+5.  gas_monitor.py
+6.  alert_system.py
+7.  live_alert_listener.py
+
+==============================================================
+  SECTION 2 — SYSTEM ARCHITECTURE
+==============================================================
+
+  The project is organised into eight layers:
+
+  1. Smart Contract Layer
+     Two Solidity contracts deployed to the local EVM:
+     • StoreRewards.sol     — roles, items, users, redemptions.
+     • RewardPointCoin.sol  — custom ERC-20 token (RPC).
+
+  2. On-Chain Role System
+     Roles are enforced INSIDE the Solidity contracts:
+     • owner    — single address set in constructor
+     • admins   — mapping(address => bool), managed by owner
+     • users    — mapping(address => bool), managed by admins
+     Modifiers: onlyOwner, onlyAdmin, onlyUser, whenNotPaused
+
+  3. Token Economics Layer
+     The Admin (owner) is the sole minting authority.
+     1 RPC = 1 Reward Point.  Items cost 50–500 RPC.
+     Tokens are spent (transferred to admin) on redemption.
+
+  4. Blockchain Interaction Layer
+     blockchain.py centralises all web3.py calls.
+
+  5. CLI Layer
+     terminal_app.py — primary UI.
+     Two menus: Admin Menu (6 tasks) and User Menu (5 tasks).
+
+  6. Event Monitoring Layer
+     live_alert_listener.py — real-time terminal alerts.
+     alert_system.py         — threshold-based alerts.
+
+  7. Automation / Background Layer
+     auto_reward_distribution.py — periodic reward minting
+     fraud_detection.py          — suspicious transfer detection
+     scheduled_snapshots.py      — timed balance CSV export
+     activity_logger.py          — persistent JSON event log
+     gas_monitor.py              — gas usage tracking
+
+  8. Documentation & Testing Layer
+     security_test.py            — automated test suite
+     ownership_transfer_test.py  — four-step ownership proof
+     balance_snapshot.py         — manual CSV export
+     admin_dashboard.py          — system summary printout
+     This file (SYSTEM_DOCUMENTATION.txt)
+
+==============================================================
+  SECTION 3 — ROLE SYSTEM (ON-CHAIN)
+==============================================================
+
+  How Roles Work
+  --------------
+  All roles are enforced by Solidity modifiers inside the
+  smart contracts.  Python scripts do NOT determine access
+  rights — they simply sign transactions and the EVM rejects
+  any unauthorised calls at the contract level.
+
+  Role Hierarchy
+  --------------
+    owner  →  can do everything (all admin + owner functions)
+    admin  →  can manage items, users, and call admin tasks
+    user   →  can earn, redeem, transfer, view
+
+  How Roles Are Assigned
+  ----------------------
+  Owner:
+    Set automatically in the constructor to msg.sender (the
+    deployer).  Can be transferred via transferOwnership().
+
+  Admin:
+    Owner calls addAdmin(address) — sets admins[addr] = true.
+    Owner calls removeAdmin(address) to revoke.
+
+  User:
+    Any address may self-register via registerUser(name).
+    Admin may also call addUser(address) or removeUser(address).
+
+  Relevant Solidity Code (StoreRewards.sol)
+  ------------------------------------------
+    address public owner;
+    mapping(address => bool) public admins;
+    mapping(address => bool) public users;
+
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Owner only");
+    }
+    modifier onlyAdmin() {
+        require(admins[msg.sender] || msg.sender == owner, "Admin only");
+    }
+    modifier onlyUser() {
+        require(users[msg.sender] || registeredUsers[msg.sender], "User only");
+    }
+
+  RewardPointCoin.sol
+  --------------------
+    address public owner;
+
+    modifier onlyAdmin() {
+        require(msg.sender == owner, "Admin only");
+    }
+
+    mint() and burn() are restricted to onlyAdmin.
+
+==============================================================
+  SECTION 4 — DEPLOYMENT STEPS
+==============================================================
+
+  Step 1 — Start Ganache
+  ----------------------
+  Open Ganache GUI and start a Quickstart workspace, or:
+
+    npx ganache-cli --port 7545 --accounts 10
+
+  Ganache settings:
+    URL      : http://127.0.0.1:7545
+    Port     : 7545
+    Accounts : at least 10 pre-funded accounts
+
+  Step 2 — Install Python Dependencies
+  -------------------------------------
+    pip install web3 py-solc-x
+
+  Step 3 — Run Auto-Setup
+  -----------------------
+  From the scripts/ directory:
+
+    python auto_setup.py
+
+  This script will:
+    a) Connect to Ganache
+    b) Compile RewardPointCoin.sol and StoreRewards.sol
+    c) Deploy both contracts (admin = accounts[0])
+    d) Seed 6 demo reward items
+    e) Mint 100,000 RPC to admin; 1,000 RPC to accounts 1–5
+    f) Save deployment metadata:
+         scripts/deployment.json        ← runtime loader
+         deployment/contracts.json      ← address summary
+         deployment/StoreRewards_ABI.json
+         deployment/RewardPointCoin_ABI.json
+
+  Step 4 — Verify Deployment Artifacts
+  -------------------------------------
+  After auto_setup.py completes, verify the deployment/
+  folder exists and contains:
+
+    deployment/
+    ├── contracts.json          {"StoreRewards": "0x...", "RewardPointCoin": "0x..."}
+    ├── StoreRewards_ABI.json
+    └── RewardPointCoin_ABI.json
+
+==============================================================
+  SECTION 5 — HOW TO RUN THE TERMINAL APP
+==============================================================
+
+  Launch
+  ------
+  From the scripts/ directory (after auto_setup.py):
+
+    python terminal_app.py
+
+  Account Selection
+  -----------------
+  On startup you will see a numbered list of all Ganache
+  accounts with their ETH balances.  Enter the index (0–9)
+  of the account you want to act as.  Account 0 is the admin.
+
+  First-Time Registration
+  -----------------------
+  If your chosen account is not yet registered, you will be
+  prompted to enter a display name.  This calls registerUser()
+  on-chain and assigns the "user" role.
+
+  USER MENU (5 Tasks)
+  -------------------
+  [1]  Earn Rewards          — view catalogue; admin can mint to self
+  [2]  Redeem Rewards        — choose item, spend RPC, on-chain recorded
+  [3]  Transfer Tokens       — send RPC to any address
+  [4]  View Balance          — check ETH + RPC for any wallet
+  [5]  View Transaction History — scan on-chain event logs
+  [6]  Admin Panel           — requires passphrase (see below)
+  [0]  Exit
+
+  ADMIN MENU (6 Tasks, passphrase: hnu2025admin)
+  -----------------------------------------------
+  [1]  Add User              — addUser() on-chain
+  [2]  Remove User           — removeUser() on-chain
+  [3]  Mint Reward Tokens    — mint() in RewardPointCoin
+  [4]  Burn Tokens           — burn() in RewardPointCoin
+  [5]  Pause / Unpause       — pauseSystem() / unpauseSystem()
+  [6]  Transfer Ownership    — transferOwnership() on both contracts
+  [7]  Add Reward Item       — addRewardItem() on-chain
+  [8]  View All Items        — read-only catalogue view
+  [0]  Return to User Menu
+
+==============================================================
+  SECTION 6 — BACKGROUND SCRIPTS
+==============================================================
+
+  Run each in a SEPARATE terminal window.
+  All require auto_setup.py to have been run first.
+
+  From the scripts/ directory:
+
+  1. Auto Reward Distribution (System Task 1)
+     ------------------------------------------
+     python auto_reward_distribution.py
+     Distributes 10 RPC to every registered user every 60s.
+     Configurable: DISTRIBUTION_INTERVAL, REWARD_PER_USER.
+
+  2. Fraud Detection (System Task 2)
+     -----------------------------------
+     python fraud_detection.py
+     Flags transfers > 5,000 RPC.  Logs to logs/fraud_log.json.
+     Configurable: TRANSFER_THRESHOLD, MAX_TX_PER_BLOCK.
+
+  3. Scheduled Snapshots (System Task 3)
+     ----------------------------------------
+     python scheduled_snapshots.py
+     Saves balance CSV to snapshots/ every 120s.
+
+  4. Activity Logger (System Task 4)
+     ------------------------------------
+     python activity_logger.py
+     Logs all contract events to logs/activity_log.json.
+
+  5. Gas Monitor (System Task 5)
+     --------------------------------
+     python gas_monitor.py
+     Tracks gas usage per transaction; saves logs/gas_report.json.
+
+  6. Alert System (System Task 6)
+     --------------------------------
+     python alert_system.py
+     Fires critical alerts for large mints, pauses, ownership
+     changes, and redemption spikes; saves logs/alerts.json.
+
+  7. Live Alert Listener (System Task 7)
+     ----------------------------------------
+     python live_alert_listener.py
+     Prints coloured real-time event alerts in the terminal.
+
+==============================================================
+  SECTION 7 — FILE AND FOLDER STRUCTURE
+==============================================================
+
+  StoreRewards/
+  ├── contracts/
+  │   ├── StoreRewards.sol          ← main contract (on-chain roles)
+  │   └── RewardPointCoin.sol       ← ERC-20 token (mint restricted)
+  │
+  ├── scripts/
+  │   ├── auto_setup.py             ← compile, deploy, seed, save
+  │   ├── blockchain.py             ← web3 helper layer
+  │   ├── terminal_app.py           ← CLI (Admin Menu + User Menu)
+  │   ├── live_alert_listener.py    ← System Task 7
+  │   ├── auto_reward_distribution.py ← System Task 1
+  │   ├── fraud_detection.py        ← System Task 2
+  │   ├── scheduled_snapshots.py    ← System Task 3
+  │   ├── activity_logger.py        ← System Task 4
+  │   ├── gas_monitor.py            ← System Task 5
+  │   ├── alert_system.py           ← System Task 6
+  │   ├── admin_dashboard.py
+  │   ├── balance_snapshot.py
+  │   ├── security_test.py
+  │   └── ownership_transfer_test.py
+  │
+  ├── deployment/                   ← created by auto_setup.py
+  │   ├── contracts.json
+  │   ├── StoreRewards_ABI.json
+  │   └── RewardPointCoin_ABI.json
+  │
+  ├── gui/
+  │   └── gui_app.py
+  │
+  ├── logs/                         ← created by background scripts
+  │   ├── activity_log.json
+  │   ├── fraud_log.json
+  │   ├── gas_report.json
+  │   └── alerts.json
+  │
+  ├── snapshots/                    ← created by scheduled_snapshots.py
+  │   └── snapshot_YYYYMMDD_HHMMSS.csv
+  │
+  └── docs/
+      └── SYSTEM_DOCUMENTATION.txt  ← this file
+
+==============================================================
+  SECTION 8 — PREREQUISITES
+==============================================================
+
+  Software Required
+  -----------------
+  • Python 3.10 or later
+  • Ganache (GUI or CLI)     https://trufflesuite.com/ganache/
+  • pip packages:
+
+    pip install web3 py-solc-x
+
+  Ganache Settings
+  ----------------
+  • URL      : http://127.0.0.1:7545
+  • Port     : 7545
+  • Accounts : at least 10 pre-funded accounts
+
+==============================================================
+  SECTION 9 — QUICK START CHECKLIST
+==============================================================
+
+  [ ] 1. Start Ganache on port 7545
+  [ ] 2. pip install web3 py-solc-x
+  [ ] 3. cd StoreRewards/scripts
+  [ ] 4. python auto_setup.py
+  [ ] 5. Verify deployment/ folder was created
+  [ ] 6. python terminal_app.py          ← main app
+  [ ] 7. (optional) python live_alert_listener.py   ← terminal 2
+  [ ] 8. (optional) python activity_logger.py       ← terminal 3
+  [ ] 9. (optional) python auto_reward_distribution.py ← terminal 4
+
+==============================================================
+  END OF SYSTEM DOCUMENTATION
+==============================================================
